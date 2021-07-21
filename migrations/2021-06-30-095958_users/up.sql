@@ -2,8 +2,8 @@
 
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY,
-    name character varying(50) NOT NULL,
-    password character varying(50) NOT NULL,
-    email character varying(355) NOT NULL,
+    name character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
     created_at TIMESTAMP NOT NULL
 );

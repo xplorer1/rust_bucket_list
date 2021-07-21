@@ -15,6 +15,18 @@ pub struct User {
     pub created_at: chrono::NaiveDateTime,
 }
 
+impl User {
+    pub fn from_payload (user_id: i32, name: String, password: String, email: String) -> Self {
+        User {
+            user_id: user_id,
+            name: name,
+            password: password,
+            email: email,
+            created_at: chrono::Local::now().naive_local()
+        }
+    }
+}
+
 #[derive(Identifiable, Associations, Debug, Deserialize, Serialize, Queryable, Insertable)]
 #[belongs_to(User, foreign_key = "user_id")]
 #[primary_key(bucket_id)]

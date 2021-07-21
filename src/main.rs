@@ -4,10 +4,12 @@ extern crate diesel;
 use actix_web::{middleware, web, App, HttpServer};
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
+use controllers::*;
 
 mod models;
 mod schema;
 mod utils;
+mod controllers;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -26,6 +28,13 @@ async fn main() -> std::io::Result<()> {
             .wrap(middleware::Logger::default())
             .data(pool.clone())
             .data(web::JsonConfig::default().limit(4096))
+            .service(
+                web::scope("/api")
+                    .service(
+                        web::resource("/user")
+                            .route(web::post().to(user_controller::create_user))
+                    )
+            )
     })
     .bind("127.0.0.1:9000")?
     .run()
